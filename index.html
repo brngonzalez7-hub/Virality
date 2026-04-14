@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Virality — Free Etsy Keyword Generator | AI-Powered SEO Tool</title>
+<meta name="description" content="Generate optimized Etsy titles, tags, and descriptions that rank higher and convert better. Free to try — no signup required.">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DCEMY6V9NZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DCEMY6V9NZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a26;
+    --accent: #7c6ff7;
+    --accent2: #f7c96f;
+    --accent3: #6ff7c4;
+    --text: #f0effe;
+    --muted: #8880bb;
+    --border: rgba(124,111,247,0.18);
+    --radius: 14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: -40%; left: -20%;
+    width: 80vw; height: 80vw;
+    background: radial-gradient(circle, rgba(124,111,247,0.07) 0%, transparent 65%);
+    pointer-events: none; z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -30%; right: -10%;
+    width: 60vw; height: 60vw;
+    background: radial-gradient(circle, rgba(111,247,196,0.05) 0%, transparent 65%);
+    pointer-events: none; z-index: 0;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: -0.5px;
+    color: var(--text);
+  }
+  .logo span { color: var(--accent); }
+  .nav-badge {
+    background: rgba(111,247,196,0.1);
+    border: 1px solid rgba(111,247,196,0.2);
+    color: var(--accent3);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 100px;
+    letter-spacing: 0.3px;
+  }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 72px 0 32px;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(247,201,111,0.08);
+    border: 1px solid rgba(247,201,111,0.2);
+    color: var(--accent2);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 6vw, 58px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    margin-bottom: 20px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .hero p {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 480px;
+    margin: 0 auto 12px;
+    line-height: 1.65;
+    font-weight: 300;
+  }
+  .hero-free {
+    font-size: 13px;
+    color: var(--accent3);
+    margin-bottom: 40px;
+    font-weight: 500;
+  }
+
+  /* SEARCH BOX */
+  .search-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 8px 8px 8px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 640px;
+    margin: 0 auto;
+    transition: border-color 0.2s;
+  }
+  .search-wrap:focus-within {
+    border-color: rgba(124,111,247,0.5);
+  }
+  .search-wrap input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--text);
+    min-width: 0;
+  }
+  .search-wrap input::placeholder { color: var(--muted); }
+  .search-wrap select {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    padding: 8px 12px;
+    outline: none;
+    cursor: pointer;
+  }
+  .btn-generate {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.15s, transform 0.15s;
+    letter-spacing: 0.2px;
+  }
+  .btn-generate:hover { opacity: 0.88; transform: translateY(-1px); }
+  .btn-generate:active { transform: scale(0.97); }
+  .btn-generate:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+  /* USES COUNTER */
+  .uses-counter {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .uses-counter span { color: var(--accent3); font-weight: 500; }
+
+  /* RESULTS SECTION */
+  .results-section { padding: 48px 0 40px; }
+  .results-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .results-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  /* LISTING SCORE CARD */
+  .score-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: start;
+  }
+  .score-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .score-title-text { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 600; line-height: 1.4; }
+  .score-badge {
+    background: rgba(111,247,196,0.1);
+    border: 1px solid rgba(111,247,196,0.25);
+    color: var(--accent3);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* TAGS */
+  .tags-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    background: rgba(124,111,247,0.1);
+    border: 1px solid rgba(124,111,247,0.2);
+    color: #b8b0f5;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .tag:hover { background: rgba(124,111,247,0.2); }
+  .tag.copied { background: rgba(111,247,196,0.12); border-color: rgba(111,247,196,0.3); color: var(--accent3); }
+
+  /* DESCRIPTION */
+  .desc-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .desc-text { font-size: 14px; line-height: 1.75; color: #ccc9f0; font-weight: 300; }
+
+  /* KEYWORD TABLE */
+  .keyword-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .keyword-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .kw-text { font-size: 13px; font-weight: 500; }
+  .kw-meta { display: flex; gap: 8px; align-items: center; }
+  .kw-vol { font-size: 11px; color: var(--muted); }
+  .kw-comp { font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 500; }
+  .comp-low { background: rgba(111,247,196,0.1); color: var(--accent3); }
+  .comp-med { background: rgba(247,201,111,0.1); color: var(--accent2); }
+  .comp-high { background: rgba(247,111,111,0.1); color: #f76f6f; }
+
+  /* COPY BTN */
+  .copy-all-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .copy-all-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* EMPTY / LOADING */
+  .empty-state { text-align: center; padding: 60px 20px; }
+  .empty-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.4; }
+  .empty-title { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 600; margin-bottom: 8px; color: var(--muted); }
+  .empty-sub { font-size: 14px; color: var(--muted); opacity: 0.6; }
+  .loading-state { text-align: center; padding: 60px 20px; }
+  .spinner {
+    width: 36px; height: 36px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { color: var(--muted); font-size: 14px; }
+
+  /* SECTION DIVIDER */
+  .section-divider {
+    display: flex; align-items: center; gap: 12px; margin: 32px 0 20px;
+  }
+  .divider-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px; font-weight: 600;
+    color: var(--muted); text-transform: uppercase;
+    letter-spacing: 0.8px; white-space: nowrap;
+  }
+  .divider-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* UPGRADE BANNER */
+  .upgrade-banner {
+    display: none;
+    background: var(--surface);
+    border: 1px solid rgba(124,111,247,0.3);
+    border-radius: var(--radius);
+    padding: 32px;
+    text-align: center;
+    margin-top: 24px;
+  }
+  .upgrade-banner.visible { display: block; }
+  .upgrade-banner h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .upgrade-banner p {
+    font-size: 14px; color: var(--muted);
+    margin-bottom: 20px; font-weight: 300;
+  }
+  .upgrade-banner a {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 32px;
+    font-family: 'Syne', sans-serif;
+    font-size: 15px; font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .upgrade-banner a:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  /* HOW IT WORKS */
+  .how-section { padding: 40px 0 60px; }
+  .section-heading-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px; font-weight: 600;
+    color: var(--accent2); text-transform: uppercase;
+    letter-spacing: 1px; margin-bottom: 12px;
+  }
+  .section-heading {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px; font-weight: 800;
+    letter-spacing: -0.5px; margin-bottom: 32px;
+  }
+  .steps { display: flex; flex-direction: column; gap: 16px; }
+  .step {
+    display: flex; gap: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    transition: border-color 0.2s;
+  }
+  .step:hover { border-color: rgba(124,111,247,0.35); }
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 24px; font-weight: 700;
+    color: var(--accent);
+    min-width: 32px; line-height: 1;
+  }
+  .step h3 { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
+  .step p { font-size: 14px; color: var(--muted); font-weight: 300; line-height: 1.5; }
+
+  /* FOUNDER SECTION */
+  .founder-section { padding: 0 0 60px; }
+  .founder-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    display: flex; gap: 20px; align-items: flex-start;
+  }
+  .founder-avatar {
+    width: 44px; height: 44px;
+    background: rgba(124,111,247,0.15);
+    border: 1px solid rgba(124,111,247,0.25);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700; color: var(--accent);
+    font-size: 18px; flex-shrink: 0;
+  }
+  .founder-quote {
+    font-size: 15px; color: #ccc9f0;
+    line-height: 1.65; font-style: italic;
+    margin-bottom: 10px; font-weight: 300;
+  }
+  .founder-name {
+    font-size: 13px; color: var(--muted);
+  }
+
+  /* MINI STATS */
+  .mini-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .mini-stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .mini-stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px; font-weight: 700;
+    color: var(--accent3);
+    margin-bottom: 4px;
+  }
+  .mini-stat-label { font-size: 12px; color: var(--muted); }
+
+  /* EMAIL */
+  .email-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    margin: 0 0 32px;
+    position: relative; overflow: hidden;
+  }
+
+  /* PRICING */
+  .pricing {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    margin: 0 0 80px;
+    position: relative; overflow: hidden;
+  }
+  .pricing::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%; transform: translateX(-50%);
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(124,111,247,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .pricing-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px; font-weight: 600;
+    color: var(--accent2); text-transform: uppercase;
+    letter-spacing: 1px; margin-bottom: 12px;
+  }
+  .pricing-price {
+    font-family: 'Syne', sans-serif;
+    font-size: 52px; font-weight: 800;
+    letter-spacing: -2px; margin-bottom: 4px;
+  }
+  .pricing-price sup { font-size: 24px; vertical-align: super; }
+  .pricing-sub { font-size: 14px; color: var(--muted); margin-bottom: 28px; font-weight: 300; }
+  .pricing-features {
+    list-style: none; margin-bottom: 32px;
+    display: flex; flex-direction: column; gap: 10px;
+    text-align: left; max-width: 320px;
+    margin-left: auto; margin-right: auto;
+  }
+  .pricing-features li {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px; color: #ccc9f0;
+  }
+  .check {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: rgba(111,247,196,0.12);
+    border: 1px solid rgba(111,247,196,0.3);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 10px; color: var(--accent3);
+  }
+  .btn-buy {
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 14px;
+    padding: 16px 40px;
+    font-family: 'Syne', sans-serif;
+    font-size: 15px; font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.15s;
+    letter-spacing: 0.2px; width: 100%; max-width: 320px;
+  }
+  .btn-buy:hover { opacity: 0.88; transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 24px 0 40px;
+    border-top: 1px solid var(--border);
+    font-size: 13px; color: var(--muted);
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--accent3);
+    font-size: 13px; padding: 10px 20px;
+    border-radius: 100px;
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    z-index: 999; white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ERROR */
+  .error-box {
+    background: rgba(247,111,111,0.08);
+    border: 1px solid rgba(247,111,111,0.2);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    color: #f76f6f;
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 600px) {
+    .search-wrap { flex-wrap: wrap; padding: 12px; }
+    .search-wrap select { width: 100%; }
+    .btn-generate { width: 100%; }
+    .mini-stats { grid-template-columns: 1fr; }
+    .founder-card { flex-direction: column; }
+    .pricing { padding: 28px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">Viral<span>ity</span></div>
+    <div class="nav-badge">Free to try</div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">&#10038; Powered by AI</div>
+    <h1>Keywords that <em>actually</em><br>get you found</h1>
+    <p>Generate optimized Etsy titles, tags, and descriptions that rank higher and convert better — in seconds.</p>
+    <p class="hero-free">&#9662; Try it free — no signup needed</p>
+
+    <div class="search-wrap">
+      <input type="text" id="productInput" placeholder="Describe your Etsy listing... e.g. boho wall art print" />
+      <select id="categorySelect">
+        <option value="general">All categories</option>
+        <option value="art">Art &amp; Prints</option>
+        <option value="jewelry">Jewelry</option>
+        <option value="clothing">Clothing</option>
+        <option value="home">Home &amp; Living</option>
+        <option value="digital">Digital Downloads</option>
+        <option value="craft">Craft Supplies</option>
+        <option value="vintage">Vintage</option>
+        <option value="wedding">Wedding</option>
+        <option value="baby">Baby &amp; Kids</option>
+      </select>
+      <button class="btn-generate" id="generateBtn" onclick="generateKeywords()">Generate &#10038;</button>
+    </div>
+    <div class="uses-counter"><span id="usesLeft">3</span> free searches remaining</div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results-section" id="resultsSection">
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">&#10038;</div>
+      <div class="empty-title">Your results will appear here</div>
+      <div class="empty-sub">Enter a product description above and hit Generate</div>
+    </div>
+    <div id="loadingState" style="display:none" class="loading-state">
+      <div class="spinner"></div>
+      <div class="loading-text">Analyzing Etsy search patterns...</div>
+    </div>
+    <div id="resultsContent" style="display:none"></div>
+    <div class="upgrade-banner" id="upgradeBanner">
+      <h3>You've used your free searches</h3>
+      <p>Unlock unlimited keyword generation, competition data, and all future updates with a one-time purchase.</p>
+      <a href="#pricingSection">Get unlimited access — $47</a>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="how-section">
+    <div class="section-heading-label">How it works</div>
+    <div class="section-heading">Keywords in three steps</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h3>Describe your product</h3>
+          <p>Tell Virality what you're selling in plain English. The more detail, the better your keywords.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h3>AI analyzes Etsy search patterns</h3>
+          <p>Virality cross-references your description against real Etsy search data to find high-traffic, low-competition keywords.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h3>Copy, paste, rank</h3>
+          <p>Get an optimized title, all 13 tags, and a description snippet. Copy them straight into your listing.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOUNDER SECTION -->
+  <div class="founder-section">
+    <div class="section-heading-label">Built for Etsy sellers</div>
+    <div class="section-heading">Why I built Virality</div>
+    <div class="founder-card">
+      <div class="founder-avatar">B</div>
+      <div>
+        <div class="founder-quote">"I built Virality because I got tired of seeing Etsy sellers pay $20-30/month for keyword tools that basically just pull from a database. Virality uses AI to actually understand what your product is — not just match keywords."</div>
+        <div class="founder-name">Bryan — Founder, Etsy seller &amp; indie developer &middot; <a href="https://reddit.com/u/BryanBuildsApps" target="_blank" style="color:var(--accent);text-decoration:none;">u/BryanBuildsApps</a></div>
+      </div>
+    </div>
+    <div class="mini-stats">
+      <div class="mini-stat">
+        <div class="mini-stat-num">13</div>
+        <div class="mini-stat-label">Tags per listing</div>
+      </div>
+      <div class="mini-stat">
+        <div class="mini-stat-num">~8s</div>
+        <div class="mini-stat-label">Generation time</div>
+      </div>
+      <div class="mini-stat">
+        <div class="mini-stat-num">$0</div>
+        <div class="mini-stat-label">To try it out</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EMAIL SIGNUP -->
+  <div class="email-section">
+    <div style="font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:var(--accent2);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">&#10038; Free weekly tips</div>
+    <h2 style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;letter-spacing:-0.5px;margin-bottom:12px;color:var(--text);">Get Etsy SEO tips in your inbox</h2>
+    <p style="font-size:15px;color:var(--muted);max-width:400px;margin:0 auto 28px;line-height:1.6;font-weight:300;">Weekly keyword strategies, algorithm updates and early access to new Virality features. Free forever.</p>
+    <div id="emailWrap" style="display:flex;gap:8px;max-width:420px;margin:0 auto 12px;flex-wrap:wrap;">
+      <input type="email" id="emailInput" placeholder="your@email.com" style="flex:1;min-width:200px;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 16px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;" />
+      <button onclick="submitEmail()" style="background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-family:'Syne',sans-serif;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;">Subscribe free &#10038;</button>
+    </div>
+    <div id="emailSuccess" style="display:none;color:var(--accent3);font-size:14px;margin-bottom:8px;">&#127881; You're in! Talk soon.</div>
+    <div style="font-size:12px;color:var(--muted);opacity:0.6;">No spam ever — unsubscribe anytime</div>
+  </div>
+
+  <!-- PRICING -->
+  <div class="pricing" id="pricingSection">
+    <div class="pricing-label">One-time purchase</div>
+    <div class="pricing-price"><sup>$</sup>47</div>
+    <div class="pricing-sub">Lifetime access — no subscription, ever.</div>
+    <ul class="pricing-features">
+      <li><div class="check">&#10003;</div> Unlimited keyword searches</li>
+      <li><div class="check">&#10003;</div> AI-optimized titles &amp; descriptions</li>
+      <li><div class="check">&#10003;</div> 13 tags per listing</li>
+      <li><div class="check">&#10003;</div> Competition &amp; volume estimates</li>
+      <li><div class="check">&#10003;</div> All future updates included</li>
+    </ul>
+    <button class="btn-buy" onclick="handleBuy()">Get Virality — $47</button>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    Built by <a href="https://reddit.com/u/BryanBuildsApps" target="_blank">u/BryanBuildsApps</a> &middot; Virality &copy; 2026
+  </footer>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+const API_URL = '/api/generate';
+const FREE_LIMIT = 3;
+
+let usesLeft = parseInt(localStorage.getItem('virality_uses') ?? FREE_LIMIT);
+if (isNaN(usesLeft) || usesLeft > FREE_LIMIT) usesLeft = FREE_LIMIT;
+document.getElementById('usesLeft').textContent = usesLeft;
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function handleBuy() {
+  showToast('Connecting to checkout...');
+  setTimeout(() => {
+    showToast('Payment integration coming soon! Email bryan for early access.');
+  }, 1000);
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'purchase_click', { event_category: 'conversion', value: 47 });
+  }
+}
+
+async function generateKeywords() {
+  const input = document.getElementById('productInput').value.trim();
+  if (!input) { showToast('Enter a product description first'); return; }
+
+  if (usesLeft <= 0) {
+    document.getElementById('upgradeBanner').classList.add('visible');
+    showToast('You\'ve used all free searches');
+    return;
+  }
+
+  const category = document.getElementById('categorySelect').value;
+  const btn = document.getElementById('generateBtn');
+
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('loadingState').style.display = 'block';
+  document.getElementById('resultsContent').style.display = 'none';
+  document.getElementById('upgradeBanner').classList.remove('visible');
+  btn.disabled = true;
+  btn.textContent = 'Generating...';
+
+  const prompt = `You are an expert Etsy SEO specialist. A seller has the following product:
+
+Product: "${input}"
+Category: ${category}
+
+Generate a comprehensive Etsy SEO package. Respond ONLY with a valid JSON object (no markdown, no backticks) in this exact format:
+{
+  "score": 87,
+  "title": "Optimized Etsy listing title here (max 140 chars, keyword-rich)",
+  "tags": ["tag1","tag2","tag3","tag4","tag5","tag6","tag7","tag8","tag9","tag10","tag11","tag12","tag13"],
+  "description": "A compelling 2-3 sentence product description optimized for Etsy search with natural keyword integration.",
+  "keywords": [
+    {"keyword": "example keyword", "volume": "High", "competition": "Low"},
+    {"keyword": "another keyword", "volume": "Medium", "competition": "Medium"},
+    {"keyword": "third keyword", "volume": "High", "competition": "High"},
+    {"keyword": "fourth keyword", "volume": "Low", "competition": "Low"},
+    {"keyword": "fifth keyword", "volume": "Medium", "competition": "Low"},
+    {"keyword": "sixth keyword", "volume": "High", "competition": "Medium"}
+  ]
+}
+
+Rules:
+- score: SEO strength from 60-98
+- title: must include main keywords naturally, under 140 characters
+- tags: exactly 13 tags, each under 20 characters, most relevant first
+- description: natural, buyer-focused, includes 3-5 keywords
+- keywords: 6 keyword ideas with realistic volume/competition estimates`;
+
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    const data = await res.json();
+    const raw = data.content.map(i => i.text || '').join('');
+    const clean = raw.replace(/```json|```/g, '').trim();
+    const result = JSON.parse(clean);
+
+    // Decrement free uses
+    usesLeft--;
+    localStorage.setItem('virality_uses', usesLeft);
+    document.getElementById('usesLeft').textContent = usesLeft;
+
+    renderResults(result, input);
+
+    if (usesLeft <= 0) {
+      document.getElementById('upgradeBanner').classList.add('visible');
+    }
+
+    // Track event
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'generate_keywords', {
+        event_category: 'engagement',
+        event_label: category,
+        value: 1
+      });
+    }
+  } catch (err) {
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('resultsContent').innerHTML = '<div class="error-box">Something went wrong. Please try again. (' + err.message + ')</div>';
+    document.getElementById('resultsContent').style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Generate \u2726';
+  }
+}
+
+function renderResults(data, input) {
+  document.getElementById('loadingState').style.display = 'none';
+
+  const compClass = c => c === 'Low' ? 'comp-low' : c === 'Medium' ? 'comp-med' : 'comp-high';
+  const esc = s => s.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+
+  const html = `
+    <div class="results-header">
+      <div class="results-title">Results for "${input}"</div>
+      <button class="copy-all-btn" id="copyAllBtn">Copy all</button>
+    </div>
+
+    <div class="section-divider">
+      <div class="divider-label">Optimized title</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="score-card">
+      <div>
+        <div class="score-label">Listing title</div>
+        <div class="score-title-text">${data.title}</div>
+        <div style="margin-top:10px">
+          <button class="copy-all-btn" data-copy="${esc(data.title)}">Copy title</button>
+        </div>
+      </div>
+      <div>
+        <div class="score-badge">${data.score}</div>
+        <div style="font-size:10px;color:var(--muted);text-align:center;margin-top:4px">SEO score</div>
+      </div>
+    </div>
+
+    <div class="section-divider">
+      <div class="divider-label">Tags (${data.tags.length})</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="desc-section">
+      <div class="tags-wrap">
+        ${data.tags.map(tag => `<div class="tag" data-tag="${esc(tag)}">
+          <span>${tag}</span>
+          <span style="opacity:0.5;font-size:10px">+</span>
+        </div>`).join('')}
+      </div>
+      <div style="margin-top:12px">
+        <button class="copy-all-btn" data-copy="${esc(data.tags.join(', '))}">Copy all tags</button>
+      </div>
+    </div>
+
+    <div class="section-divider">
+      <div class="divider-label">Description</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="desc-section">
+      <div class="desc-text">${data.description}</div>
+      <div style="margin-top:12px">
+        <button class="copy-all-btn" data-copy="${esc(data.description)}">Copy description</button>
+      </div>
+    </div>
+
+    <div class="section-divider">
+      <div class="divider-label">Keyword research</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="keyword-grid">
+      ${data.keywords.map(kw => `
+        <div class="keyword-card">
+          <div class="kw-text">${kw.keyword}</div>
+          <div class="kw-meta">
+            <div class="kw-vol">${kw.volume} vol.</div>
+            <div class="kw-comp ${compClass(kw.competition)}">${kw.competition} comp.</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  const container = document.getElementById('resultsContent');
+  container.innerHTML = html;
+  container.style.display = 'block';
+
+  // Wire up copy buttons with event delegation
+  const allText = `TITLE:\n${data.title}\n\nTAGS:\n${data.tags.join(', ')}\n\nDESCRIPTION:\n${data.description}`;
+
+  document.getElementById('copyAllBtn').addEventListener('click', () => {
+    navigator.clipboard.writeText(allText).then(() => showToast('Full listing copied!'));
+  });
+
+  container.querySelectorAll('[data-copy]').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const text = this.getAttribute('data-copy');
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = this.textContent;
+        this.textContent = 'Copied!';
+        setTimeout(() => this.textContent = orig, 1500);
+        showToast('Copied to clipboard');
+      });
+    });
+  });
+
+  container.querySelectorAll('[data-tag]').forEach(tag => {
+    tag.addEventListener('click', function() {
+      const text = this.getAttribute('data-tag');
+      navigator.clipboard.writeText(text).then(() => {
+        this.classList.add('copied');
+        setTimeout(() => this.classList.remove('copied'), 1500);
+        showToast('Copied: ' + text);
+      });
+    });
+  });
+}
+
+async function submitEmail() {
+  const email = document.getElementById('emailInput').value.trim();
+  if (!email || !email.includes('@')) {
+    showToast('Please enter a valid email');
+    return;
+  }
+  const btn = document.querySelector('[onclick="submitEmail()"]');
+  btn.textContent = 'Subscribing...';
+  btn.disabled = true;
+  try {
+    await fetch('https://us1.api.mailchimp.com/3.0/lists/a8d4075f78/members', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'apikey d02b2f7617c2f93e97b592ade6f980bd-us1',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email_address: email, status: 'subscribed', tags: ['virality-app'] })
+    });
+  } catch(err) {}
+  document.getElementById('emailWrap').style.display = 'none';
+  document.getElementById('emailSuccess').style.display = 'block';
+  showToast('Thanks for subscribing!');
+  if (typeof gtag !== 'undefined') gtag('event', 'email_signup', { event_category: 'conversion' });
+}
+
+document.getElementById('productInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') generateKeywords();
+});
+</script>
+</body>
+</html>
