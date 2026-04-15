@@ -637,8 +637,8 @@
       <div class="step">
         <div class="step-num">2</div>
         <div>
-          <h3>AI analyzes Etsy search patterns</h3>
-          <p>Virality cross-references your description against real Etsy search data to find high-traffic, low-competition keywords.</p>
+          <h3>AI + real Etsy search data</h3>
+          <p>Virality pulls real autocomplete data from Etsy search, then uses AI to generate keywords grounded in what buyers are actually searching for — not just guesses.</p>
         </div>
       </div>
       <div class="step">
@@ -804,13 +804,14 @@ Rules:
     const raw = data.content.map(i => i.text || '').join('');
     const clean = raw.replace(/```json|```/g, '').trim();
     const result = JSON.parse(clean);
+    const etsySuggestions = data.etsy_suggestions || [];
 
     // Decrement free uses
     usesLeft--;
     localStorage.setItem('virality_uses', usesLeft);
     document.getElementById('usesLeft').textContent = usesLeft;
 
-    renderResults(result, input);
+    renderResults(result, input, etsySuggestions);
 
     if (usesLeft <= 0) {
       document.getElementById('upgradeBanner').classList.add('visible');
@@ -834,15 +835,36 @@ Rules:
   }
 }
 
-function renderResults(data, input) {
+function renderResults(data, input, etsySuggestions) {
   document.getElementById('loadingState').style.display = 'none';
 
   const compClass = c => c === 'Low' ? 'comp-low' : c === 'Medium' ? 'comp-med' : 'comp-high';
   const esc = s => s.replace(/'/g, "\\'").replace(/"/g, '&quot;');
 
+  const etsyBadge = etsySuggestions && etsySuggestions.length > 0
+    ? '<span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--accent3);background:rgba(111,247,196,0.08);border:1px solid rgba(111,247,196,0.2);padding:3px 10px;border-radius:100px;margin-left:8px;">&#10003; Powered by real Etsy search data</span>'
+    : '';
+
+  const etsySection = etsySuggestions && etsySuggestions.length > 0
+    ? `
+    <div class="section-divider">
+      <div class="divider-label">Trending on Etsy</div>
+      <div class="divider-line"></div>
+    </div>
+    <div class="desc-section">
+      <div style="font-size:12px;color:var(--accent3);margin-bottom:10px;">Real search terms buyers are using on Etsy right now:</div>
+      <div class="tags-wrap">
+        ${etsySuggestions.map(s => `<div class="tag" data-tag="${esc(s)}" style="background:rgba(111,247,196,0.08);border-color:rgba(111,247,196,0.2);color:var(--accent3);">
+          <span>${s}</span>
+          <span style="opacity:0.5;font-size:10px">+</span>
+        </div>`).join('')}
+      </div>
+    </div>`
+    : '';
+
   const html = `
     <div class="results-header">
-      <div class="results-title">Results for "${input}"</div>
+      <div class="results-title">Results for "${input}"${etsyBadge}</div>
       <button class="copy-all-btn" id="copyAllBtn">Copy all</button>
     </div>
 
@@ -910,6 +932,8 @@ function renderResults(data, input) {
         </div>
       `).join('')}
     </div>
+
+    ${etsySection}
   `;
 
   const container = document.getElementById('resultsContent');
@@ -957,18 +981,26 @@ async function submitEmail() {
   btn.textContent = 'Subscribing...';
   btn.disabled = true;
   try {
-    await fetch('https://us1.api.mailchimp.com/3.0/lists/a8d4075f78/members', {
+    const res = await fetch('/api/subscribe', {
       method: 'POST',
-      headers: {
-        'Authorization': 'apikey d02b2f7617c2f93e97b592ade6f980bd-us1',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email_address: email, status: 'subscribed', tags: ['virality-app'] })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email })
     });
-  } catch(err) {}
-  document.getElementById('emailWrap').style.display = 'none';
-  document.getElementById('emailSuccess').style.display = 'block';
-  showToast('Thanks for subscribing!');
+    const data = await res.json();
+    if (data.success) {
+      document.getElementById('emailWrap').style.display = 'none';
+      document.getElementById('emailSuccess').style.display = 'block';
+      showToast(data.status === 'already_subscribed' ? 'You\'re already subscribed!' : 'Thanks for subscribing!');
+    } else {
+      showToast(data.error || 'Something went wrong. Try again.');
+      btn.textContent = 'Subscribe free \u2726';
+      btn.disabled = false;
+    }
+  } catch(err) {
+    document.getElementById('emailWrap').style.display = 'none';
+    document.getElementById('emailSuccess').style.display = 'block';
+    showToast('Thanks for subscribing!');
+  }
   if (typeof gtag !== 'undefined') gtag('event', 'email_signup', { event_category: 'conversion' });
 }
 
